@@ -4,8 +4,6 @@ This is my [Progress Journal website](https://pjournal.github.io/boun01-tugruloz
 
 ## Assignments
 
-There will be several assignments done for this course.
-
 ### Assignment 1: RMarkdown Homework
 - [Here](C:\Users\tugrul\Desktop\RMarkdown_Homework)
 
