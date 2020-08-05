@@ -1,6 +1,6 @@
 ## Welcome to Tugrul's Github Page
 
-This is my [Progress Journal website](https://pjournal.github.io/boun01-tugrulozsoy/) created for IE 48A course at Boğaziçi University. You can also visit my personal [Github](https://github.com/tugrulozsoy).
+This is my progress journal website created for IE 48A course at Boğaziçi University. You can also visit my personal [Github](https://github.com/tugrulozsoy).
 
 ## Assignments
 
