@@ -5,7 +5,7 @@ This is my progress journal website created for IE 48A course at Boğaziçi Univ
 ## Assignments
 
 ### Assignment 1: RMarkdown Homework
-- [Here](C:\Users\tugrul\Desktop\RMarkdown_Homework)
+- [Here](https://pjournal.github.io/boun01-tugrulozsoy/RMarkdown-Homework.html)
 
 ### Assignment 2
 - 
