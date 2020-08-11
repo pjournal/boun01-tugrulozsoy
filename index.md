@@ -8,7 +8,7 @@ This is my progress journal website created for IE 48A course at Bogazici Univer
 - [Here](https://pjournal.github.io/boun01-tugrulozsoy/RMarkdown_Homework.html)
 
 ### Assignment 2
-- 
+- [Here]()
 
 ### Assignment 3
 - 
