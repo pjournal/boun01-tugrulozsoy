@@ -8,7 +8,7 @@ This is my progress journal website created for IE 48A course at Bogazici Univer
 
 ## *Week 2*
 
-* [Assignment 2: Electricity Market Prices](https://pjournal.github.io/boun01-tugrulozsoy/Electricity_Market_Prices.html): *Prepared a report about July 2020’s electricity prices using RMarkdown, dplyr and ggplot2.*
+* [Assignment 2: Electricity Market Prices](https://pjournal.github.io/boun01-tugrulozsoy/Electricity-Market-Prices.html): *Prepared a report about July 2020’s electricity prices using RMarkdown, dplyr and ggplot2.*
 
 ## *Week 3*
 
