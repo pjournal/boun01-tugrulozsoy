@@ -16,7 +16,7 @@ This is my progress journal website created for IE 48A course at Bogazici Univer
 
 ## Week *#5*
 
-- 🔴 [Assignment 3: Diamonds Data](): 
+- [Assignment 3: Diamonds Data](): 
 
 ## Week *#6*
 
