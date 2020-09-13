@@ -12,11 +12,11 @@ This is my progress journal website created for IE 48A course at Bogazici Univer
 
 ## *Week 3*
 
-* [Group Assignment: New York City Airbnb Open Data](group_assignment_airbnb): *Since 2008, guests and hosts have used Airbnb to expand on traveling possibilities and present more unique, personalized way of experiencing the world. This dataset describes the listing activity and metrics in NYC, NY for 2019.*
+* [Group Assignment: New York City Airbnb Open Data](https://pjournal.github.io/boun01g-r-sizlar/nyc_rsizlar.html): *Since 2008, guests and hosts have used Airbnb to expand on traveling possibilities and present more unique, personalized way of experiencing the world. This dataset describes the listing activity and metrics in NYC, NY for 2019.*
 
 ## Week *#5*
 
-- [Assignment 3: Diamonds Data](): 
+- [Assignment 3: Diamonds Data](https://pjournal.github.io/boun01-tugrulozsoy/Diamonds-Price-Estimation.html): *Machine Learning project using tidyverse, `diamonds` dataset, and a regression model.*
 
 ## Week *#6*
 
