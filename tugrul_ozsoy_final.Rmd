@@ -1,0 +1,253 @@
+---
+title: "BOUN IE 48A - Summer 2019-2020 Final"
+author: "Tugrul Ozsoy"
+date: "14 09 2020"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+  html_document:
+    number_sections: yes
+    theme: united
+    toc: yes
+    toc_depth: 4
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(openxlsx)
+library(knitr)
+library(reshape2)
+library(readr)
+```
+
+
+# Part I: Short and Simple
+
+## 1. 
+I do not think very well about the habit of governments which is focusing on analyzing the pure numbers of infected and deceased people, or number of test made each day. Every country's population, wealth, and healthcare services differ from themselves on distinct, crucial points. I cannot see any sense in comparing the pure numbers related to COVID in different countries without considering those points. One of the improvement in comparison methods I can suggest is the percentage of available healthcare standards per each country such as empty beds, respirators, doctor and nurse numbers(ideal for one patient) to the citizens which are infected or under the risk could be created and tracked. I am adressing here a general scaling problem. In this way, countries could be personalized in a manner of speaking. Each country has its own red line and when one of them goes down it(like Italy in March/April/May), others would find the chance to review themselves and to take action. Even it can be improven as personalization of cities about COVID statistics.
+
+## 2.
+
+My exploratory data analysis workflow starts with the stage of understanding the data through my need(In this case, it is research question). To understand, I make a quick research in the source of data and try to figure out what was aimed while this dataset was being created. After I go back to data, I review variables and try to make superficial connections between categorical and numerical variables. I look at if there is huge fluctuations between numerics and think about why through their categorical components. Then I start to create tables and charts and interpret them with my basis knowledge. 
+
+If I am given a task to measure impact of distributing funds to public welfare projects, I would probably try to think out of the box. Across the data I required, I would examine how many people or institution could not fulfill their need in the terms of education, poverty, healthcare or gender equality by government or current institutions. I would also study on monthly, yearly news bulletins which address open sores the government or instiutions are inadequate. When I found a bleeding wound or more than one, I form my performance measures on how, in what amount decreases the current insufficiency when I put fund on it.
+
+In the end of day, I could choose my title as  “Gender Inequality - The Most Important Social Problem Backed by Data” if I really notice inadequacy in Gender Inequality. However, the reason is would not be any inclination of me but an intense, stunning title would always be affective to convince people about the work is worth to consider.
+
+## 3.
+
+I plotted a graph which shows the amount of which starship used oftenly in films because I put myself in the Marketing Department of Disney. I need to sell more starship toys after a Star Wars movie came to theater and the toys had better to be the ones seen most throughout the movie.
+
+```{r}
+starwars <- starwars %>% 
+  unnest(films) %>% 
+  unnest(vehicles) %>% 
+  unnest(starships) 
+
+
+starwars %>%
+  group_by(starships) %>%
+  summarize(times = n()) %>%
+  arrange(desc(times)) %>%
+  ggplot(aes(x = starships, y = times, fill = times)) +
+  geom_col() +
+  scale_fill_gradient("times", low="yellow", high="red") +
+  theme_minimal() +
+  labs(title = "Frequency of Starships Seen",
+         subtitle = "in Star Wars Movies",
+         x = "Starship",
+         y = "Times")
+```
+
+So, I decided to sell Imperial Shuttles and X-wings in this case.
+
+
+![](https://pjournal.github.io/boun01-tugrulozsoy/imperial_shuttle.jpg)
+
+# Part II: Extending Your Group Project
+
+In my opinion, best improvement for my group analyis would fulfill its biggest lack: a strong analysis on hourly basis. Because the dataset we analyzed Intraday Market of EXIST has many fluctuations within the day as you can get from its name, there is a need well-thought analysis and explanation moved on hourly changes. Also, this improvement should also be about Clearing Matching Quantity which is the most important thing, substantial of the system of EXIST IDM.
+
+Matching is an order with the best available price has a priority. As for 2 orders with the same price, order with the earlier system record time, has the priority. Orders with the highest bidding price and the lowest asking price will be listed on the order book as top offers. There are also rules about Matching Rules for Hourly Orders.
+
+```{r}
+idm_data <- read.csv("https://raw.githubusercontent.com/pjournal/boun01g-r-sizlar/gh-pages/idm_data.csv?raw=true")
+```
+
+
+## Average Clearing (Matching) Quantity in Intraday Market on Hourly Basis
+
+```{r}
+idm_data %>% 
+  group_by(Hour) %>%
+  summarize(Clearing.Quantity..MWh. = mean(Clearing.Quantity..MWh.)) %>%
+  arrange(desc(Clearing.Quantity..MWh.))  %>%
+  ggplot(aes(x = Hour, y = Clearing.Quantity..MWh., fill = Clearing.Quantity..MWh.)) +
+  geom_col() +
+  scale_fill_gradient("MWh", low = "yellow", high = "red") +
+  theme_minimal() +
+  labs(title = "Average Matching Quantity in Intraday Market on Hourly Basis",
+         subtitle = "2019 Data",
+         x = "Hours",
+         y = "MWh")
+  
+```
+
+This bar chart tells us right before the end of day clearing quantity peaks averagely. Because bidders and offers want to make an agree before the day ends, so the supply and demand increase respectively. Finally, clearing quantity of the market reach its peak.
+
+
+
+# Part III: Welcome to Real Life
+
+## a) Data Gathering
+
+```{r}
+setwd("C:/Users/tugrul/Desktop/ie48a/takehome final/cardata")
+
+
+car_sales <- read_excel("2019_08.xlsx", skip = 4, col_names = FALSE)
+
+colnames(car_sales) <- c("make","pass_local","pass_imp","pass_total","lcv_local","lcv_imp","lcv_total","total_local","total_imp","total_total")
+
+car_sales <- car_sales %>% 
+  mutate_if(is.numeric, funs(ifelse(is.na(.), 0, .)))
+
+for(i in dir()){
+  if (i == "2019_08.xlsx"){
+    next
+  } else {
+    
+    next_month <- read_excel(i, skip = 4, col_names = FALSE)
+    
+    colnames(next_month) <- c("make","pass_local","pass_imp","pass_total","lcv_local","lcv_imp","lcv_total","total_local","total_imp","total_total")
+    
+    next_month <- next_month %>% 
+      mutate_if(is.numeric, funs(ifelse(is.na(.), 0, .)))
+    
+    
+    car_sales <- rbind(car_sales, next_month)                                                                                    
+  }}
+
+
+for(j in 1:nrow(car_sales)){
+  if(j <= 44){
+    car_sales$year[j] <- 2019
+    car_sales$month[j] <- 8
+  } else if(j >= 45 && j <= 88){
+    car_sales$year[j] <- 2019
+    car_sales$month[j] <- 9
+  } else if(j >= 89 && j <= 132){
+    car_sales$year[j] <- 2019
+    car_sales$month[j] <- 10
+  } else if(j >= 133 && j <= 176){
+    car_sales$year[j] <- 2019
+    car_sales$month[j] <- 11
+  } else if(j >= 177 && j <= 223){
+    car_sales$year[j] <- 2019
+    car_sales$month[j] <- 12
+  } else if(j >= 224 && j <= 264){
+    car_sales$year[j] <- 2020
+    car_sales$month[j] <- 1
+  } else if(j >= 265 && j <= 308){
+    car_sales$year[j] <- 2020
+    car_sales$month[j] <- 2
+  } else if(j >= 309 && j <= 352){
+    car_sales$year[j] <- 2020
+    car_sales$month[j] <- 3
+  } else if(j >= 353 && j <= 396){
+    car_sales$year[j] <- 2020
+    car_sales$month[j] <- 4
+  } else if(j >= 397 && j <= 440){
+    car_sales$year[j] <- 2020
+    car_sales$month[j] <- 5
+  } else if(j >= 441 && j <= 484){
+    car_sales$year[j] <- 2020
+    car_sales$month[j] <- 6
+  } else if(j >= 485 && j <= 529){
+    car_sales$year[j] <- 2020
+    car_sales$month[j] <- 7
+  } else{
+    car_sales$year[j] <- 2020
+    car_sales$month[j] <- 8
+  }
+}
+
+na_rows <- c(43, 87, 131, 175, 222, 263, 307, 351, 395, 439, 483, 528)
+
+car_sales <- car_sales[-na_rows, ]
+
+saveRDS(car_sales, file = "odd_final")
+```
+
+
+
+## b) Exploratory Data Analysis
+
+I will do my analysis on a theme which compares distinctively sales on local and import retail automobiles, and I will try to make some comments on monthly fluctuations in sales.
+
+### Monthly Local Retail Sales
+
+```{r}
+car_sales %>%
+  group_by(month) %>%
+  summarize(pass = sum(pass_local), lcv = sum(lcv_local)) %>%
+  mutate(total_local = pass + lcv) %>%
+  ggplot(aes(month, total_local, fill = "coral3")) +
+  geom_col() +
+  labs(title = "Monthly Local Retail Sales in Turkey", subtitle =  "between August 2019-2020", x = "Months", y = "Total Local Retail Sale") +
+  theme_minimal() +
+  theme(legend.position = "none") 
+```
+
+As you see above, there is a huge amount of local retail sales in August. One of the reasons why month of the year is seen in the customers' eyes as great time to buy a new car is end of the model year.By late summer, manufacturers are ready to clear out their 2019 models in advance of the 2020 arrivals—and are willing to offer discounts and incentives on 2019 vehicles to make this happen.
+
+Another reason is new model availability which is in August. The majority of the new 2020 models are not in dealerships by August, but the window for special orders is often open. Like pre-purchases which give the opportunity of customizing your new car exactly the way you want, choosing the colors and options you want without paying for additional features you don’t need. 
+
+Being Back-to-School season is the peak time for family car buying also can explain this trend. 
+
+
+
+### Monthly Import Retail Sales
+
+
+```{r}
+car_sales %>%
+  group_by(month) %>%
+  summarize(pass = sum(pass_imp), lcv = sum(lcv_imp)) %>%
+  mutate(total_imp = pass + lcv) %>%
+  ggplot(aes(month, total_imp, fill = "coral3")) +
+  labs(title = "Monthly Import Retail Sales in Turkey", subtitle =  "between August 2019-2020", x = "Months", y = "Total Import Retail Sale") +
+  geom_col() +
+  theme_minimal() +
+  theme(legend.position = "none") 
+```
+
+The reasons I explained in Local Retail Sales is also valid for Import Retail Sales. August is month of the year which is peak time of buying a new car.
+
+I want to stress another point in this chart. Though fluctuations are similar, we witness huge difference in terms of count of automobiles sold. Throughout whole year, import retail sales never decreases under total 5000. My next chart will focus on this issue.
+
+### Comparison in Numbers
+
+```{r}
+melted_car <- melt(car_sales)
+
+melted_car %>%
+  group_by(variable) %>%
+  summarize(total = sum(value)) %>%
+  slice(7:8) %>%
+  ggplot(aes(variable, total, group = variable, fill = variable)) +
+  geom_bar(stat = "identity", width = 0.5, position = "dodge") +
+  theme_minimal() +
+  labs(title = "Local and Import Retail Sales Comparison in Numbers", subtitle = "between August 2019-2020", x = "Kind of Sale", y = "Number")
+  
+```
+
+Between August of 2019 and August of 2020, import retail sales in automobiles almost 7 times of local retail sales. When we realize the truth of Turkey has no national car brand (TOGG is not started to sell yet), this huge difference can have a meaning. Besides, local sales is also recorded by the producers and dealers which are part of the process bringing imported car components together. So, in real sense, all bought and sold automobiles are imported ones. However, interim mission of Turkey makes it also a local seller.
